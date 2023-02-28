@@ -6,7 +6,7 @@ class Node
 
   attr_accessor :data, :left, :right
 
-  def initialize(data, left, right)
+  def initialize(data, left = nil, right = nil)
     self.data = data
     self.left = left
     self.right = right

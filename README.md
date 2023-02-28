@@ -4,5 +4,5 @@ Project: Binary Search Tree from [The Odin Project](https://www.theodinproject.c
 ## Links
 - [Link to the assignment](https://www.theodinproject.com/lessons/ruby-binary-search-trees)
 
-# Implemented Methods
+## Implemented Methods
 - TBA

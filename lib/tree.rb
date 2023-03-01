@@ -56,11 +56,56 @@ class Tree
     root
   end
 
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def delete(key, root = self.root)
+    # Base case, return root if it is empty
+    return root if root.nil?
+
+    # Search for the key to be deleted recursively
+    # if it is found than the else clause resolves
+    if key < root.key
+      root.left = delete(key, root.left)
+    elsif key > root.key
+      root.right = delete(key, root.right)
+    else
+      # node with one child or no children
+      # deletes the node and return its only child in its place
+      if root.left.nil?
+        return root.right
+      elsif root.right.nil?
+        return root.left
+      end
+
+      # node with two children, get the smallest value in subtree
+      # set the root as the foun value
+      root.key = tree_min_value(root.right)
+
+      # delete minimum value (so there is an effective change of key, no repetition)
+      root.right = delete(root.key, root.right)
+    end
+
+    root
+  end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
+
+  # Serach for the mininum value on a tree
+  def tree_min_value(root)
+    min_value = root.key
+
+    # Transverse the tree searching its left values (< root)
+    until root.left.nil?
+      min_value = root.left.key
+      root = root.left
+    end
+
+    min_value
   end
 end
 
 bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
 bst.insert(27)
+bst.delete(4)
 bst.pretty_print

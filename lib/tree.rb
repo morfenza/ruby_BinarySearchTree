@@ -22,11 +22,11 @@ class Tree
     root = Node.new(arr[mid])
 
     # recursive call
-    # left subtree with values < root
+    # left subtree with keys < root
     root.left = build_tree(arr[0...mid])
 
     # recursive call
-    # right subtree with values > root
+    # right subtree with keys > root
     root.right = build_tree(arr[mid + 1..])
 
     # returns root
@@ -36,27 +36,28 @@ class Tree
   # Method to visualize the tree (Kudos to the student who shared it on Discord)
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
-    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
+    puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.key}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
-  def insert(value, root = self.root)
+  def insert(key, root = self.root)
     # Base case, if the root is empty,
-    # return new Node with value
+    # return new Node with key
     if root.nil?
-      root = Node.new(value)
+      root = Node.new(key)
       return root
     end
 
-    # Checks value to call insert recursively on left/right tree
-    # if value > root.data -> right else left
-    value > root.data ? root.right = insert(value, root.right) : root.left = insert(value, root.left)
+    # Checks key to call insert recursively on left/right tree
+    # if key > root.key -> right else left
+    key > root.key ? root.right = insert(key, root.right) : root.left = insert(key, root.left)
 
     # Return unchanged root
     root
   end
 
-  def delete; end
+  def delete(key, root = self.root)
+  end
 end
 
 bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])

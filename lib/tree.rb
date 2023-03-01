@@ -39,7 +39,27 @@ class Tree
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
+
+  def insert(value, root = self.root)
+    # Base case, if the root is empty,
+    # return new Node with value
+    if root.nil?
+      root = Node.new(value)
+      return root
+    end
+
+    # Checks value to call insert recursively on left/right tree
+    # if value > root.data -> right else left
+    value > root.data ? root.right = insert(value, root.right) : root.left = insert(value, root.left)
+
+    # Return unchanged root
+    root
+  end
+
+  def delete; end
 end
 
 bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
+
+bst.insert(27)
 bst.pretty_print

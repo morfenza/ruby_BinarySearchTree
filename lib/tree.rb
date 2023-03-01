@@ -102,10 +102,20 @@ class Tree
 
     min_value
   end
+
+  def find(key, root = self.root)
+    # base case, return nil if empty, root if it finds
+    return root if root.nil? || root.key.eql?(key)
+
+    # recursive calls on left and right subtree depending on key value
+    find(key, root.right) if root.key < key
+    find(key, root.left)
+  end
 end
 
 bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
+p bst.find(3)
 bst.insert(27)
 bst.delete(4)
 bst.pretty_print

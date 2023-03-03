@@ -111,6 +111,37 @@ class Tree
     find(key, root.right) if root.key < key
     find(key, root.left)
   end
+
+  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
+  def level_order
+    # guard clause case
+    return if root.nil?
+
+    # value arr
+    values = []
+
+    # Queue for BFS
+    queue = [root]
+
+    # Traverse until there are no discovered nodes
+    until queue.empty?
+      # remove element from queue and pass it into a variable
+      current_node = queue.shift
+      values << current_node.key
+
+      yield(current_node) if block_given?
+
+      # push discovered nodes into queue
+      queue << current_node.left unless current_node.left.nil?
+      queue << current_node.right unless current_node.right.nil?
+
+    end
+
+    values unless block_given?
+  end
+  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 end
 
 bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
@@ -118,4 +149,11 @@ bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 p bst.find(3)
 bst.insert(27)
 bst.delete(4)
+
 bst.pretty_print
+
+p bst.level_order
+
+bst.level_order do |node|
+  puts node.key + 1
+end

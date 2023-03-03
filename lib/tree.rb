@@ -142,6 +142,49 @@ class Tree
   end
   # rubocop:enable Metrics/MethodLength
   # rubocop:enable Metrics/AbcSize
+
+  def inorder(root = self.root, values = [])
+    # base case
+    return if root.nil?
+
+    # inorder access
+    inorder(root.left, values)
+
+    yield(root) if block_given?
+    values << root.key
+
+    inorder(root.right, values)
+
+    values unless block_given?
+  end
+
+  def preorder(root = self.root, values = [])
+    # base case
+    return if root.nil?
+
+    # preorder access
+    yield(root) if block_given?
+    values << root.key
+
+    preorder(root.left, values)
+    preorder(root.right, values)
+
+    values unless block_given?
+  end
+
+  def postorder(root = self.root, values = [])
+    # base case
+    return if root.nil?
+
+    # postorder accer
+    postorder(root.left, values)
+    postorder(root.right, values)
+
+    yield(root) if block_given?
+    values << root.key
+
+    values unless block_given?
+  end
 end
 
 bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
@@ -157,3 +200,7 @@ p bst.level_order
 bst.level_order do |node|
   puts node.key + 1
 end
+
+p bst.inorder
+p bst.preorder
+p bst.postorder

@@ -185,22 +185,39 @@ class Tree
 
     values unless block_given?
   end
+
+  def height(node, height = 1, root = self.root)
+    return 0 if root.nil?
+
+    return height if root.key == node
+
+    if node > root.key
+      height += 1
+      height(node, height, root.right)
+    elsif node < root.key
+      height += 1
+      height(node, height, root.left)
+    end
+  end
 end
 
 bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 
-p bst.find(3)
-bst.insert(27)
-bst.delete(4)
+#p bst.find(3)
+#bst.insert(27)
+#bst.delete(4)
 
 bst.pretty_print
 
-p bst.level_order
+#p bst.level_order
 
-bst.level_order do |node|
-  puts node.key + 1
-end
+#bst.level_order do |node|
+#  puts node.key + 1
+#end
 
-p bst.inorder
-p bst.preorder
-p bst.postorder
+#p bst.inorder
+#p bst.preorder
+#p bst.postorder
+
+p bst.height(324)
+p bst.height(325)

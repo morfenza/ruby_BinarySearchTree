@@ -1,5 +1,5 @@
 # Ruby Binary Search Tree
-Project: Binary Search Tree from [The Odin Project](https://www.theodinproject.com/about), in this project I implemented a balanced binary search tree
+Project: Binary Search Tree from [The Odin Project](https://www.theodinproject.com/about), in this project I've implemented a balanced binary search tree
 ## Links
 - [Link to the assignment](https://www.theodinproject.com/lessons/ruby-binary-search-trees)
 

@@ -216,4 +216,19 @@ class Tree
     # height of current node
     [left_height, right_height].max + 1
   end
+
+  def balanced?(root = self.root)
+    # base case
+    return true if root.nil?
+
+    # calculate height for subtrees
+    left = height(root.left)
+    right = height(root.right)
+
+    # check balance for current and subtrees
+    return true if (left - right).abs <= 1 && balanced?(root.left) == true && balanced?(root.right) == true
+
+    # unbalanced
+    false
+  end
 end

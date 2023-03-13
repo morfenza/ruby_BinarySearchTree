@@ -108,8 +108,11 @@ class Tree
     return root if root.nil? || root.key.eql?(key)
 
     # recursive calls on left and right subtree depending on key value
-    find(key, root.right) if root.key < key
-    find(key, root.left)
+    if root.key < key
+      find(key, root.right)
+    else
+      find(key, root.left)
+    end
   end
 
   # rubocop:disable Metrics/MethodLength
@@ -186,38 +189,31 @@ class Tree
     values unless block_given?
   end
 
-  def height(node, height = 1, root = self.root)
-    return 0 if root.nil?
+  def depth(node, depth = 0, root = self.root)
+    return -1 if root.nil?
 
-    return height if root.key == node
+    return depth if root.key == node
 
     if node > root.key
-      height += 1
-      height(node, height, root.right)
+      depth += 1
+      depth(node, depth, root.right)
     elsif node < root.key
-      height += 1
-      height(node, height, root.left)
+      depth += 1
+      depth(node, depth, root.left)
     end
   end
+
+  def height(node = root)
+    node = find(node) unless node.nil? || node.instance_of?(Node)
+
+    # base case
+    return -1 if node.nil?
+
+    # calculates the height for right and left trees
+    left_height = height(node.left)
+    right_height = height(node.right)
+
+    # height of current node
+    [left_height, right_height].max + 1
+  end
 end
-
-bst = Tree.new([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
-
-#p bst.find(3)
-#bst.insert(27)
-#bst.delete(4)
-
-bst.pretty_print
-
-#p bst.level_order
-
-#bst.level_order do |node|
-#  puts node.key + 1
-#end
-
-#p bst.inorder
-#p bst.preorder
-#p bst.postorder
-
-p bst.height(324)
-p bst.height(325)

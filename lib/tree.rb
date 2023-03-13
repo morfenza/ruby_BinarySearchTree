@@ -3,6 +3,7 @@
 require_relative 'node'
 
 # Class defining a BST using node
+# rubocop:disable Metrics/ClassLength
 class Tree
   attr_accessor :root
 
@@ -231,4 +232,9 @@ class Tree
     # unbalanced
     false
   end
+
+  def rebalance
+    self.root = build_tree(level_order)
+  end
 end
+# rubocop:enable Metrics/ClassLength
